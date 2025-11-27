@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline Pengembangan AI Agent n8n</title>
+    <style>
+        /* CSS Variables & Reset */
+        :root {
+            --primary: #FF6B6B; /* Warna aksen n8n style */
+            --secondary: #4D4D4D;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Timeline Container */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        /* Garis Tengah */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #ddd;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        /* Container Item Timeline */
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0; /* Hidden for animation */
+            transform: translateY(20px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sisi Kiri dan Kanan */
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        /* Lingkaran di Garis Tengah */
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: var(--card-bg);
+            border: 4px solid var(--primary);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        /* Isi Konten (Kartu) */
+        .content {
+            padding: 20px 30px;
+            background-color: var(--card-bg);
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .content h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .content .date {
+            font-weight: bold;
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+            background: #eee;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .content ul {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+
+        .content ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .content ul li::before {
+            content: '✓';
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Panah Penunjuk */
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 28px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--card-bg);
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 28px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--card-bg) transparent transparent;
+        }
+
+        /* Responsif untuk Layar Kecil (Mobile) */
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .container::after {
+                left: 15px;
+            }
+
+            .left::after, .right::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .left::before, .right::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent var(--card-bg) transparent transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Development Roadmap</h1>
+        <p>Implementasi AI Agent WhatsApp (n8n) untuk Sistem Sekolah & Travel</p>
+    </header>
+
+    <div class="timeline">
+        
+        <div class="container left">
+            <div class="content">
+                <h2>Fase 1: Setup & Integrasi Dasar</h2>
+                <span class="date">28 Nov - 4 Des 2025</span>
+                <p>Membangun fondasi koneksi antara WhatsApp API dan engine n8n.</p>
+                <ul>
+                    <li>Setup Server n8n (Self-hosted/Cloud).</li>
+                    <li>Konfigurasi WhatsApp Business API.</li>
+                    <li>Pembuatan <strong>Main Router</strong> (Decision Node Awal).</li>
+                    <li>Integrasi Database Dasar (Google Sheets).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <h2>Fase 2: Modul Sekolah (Abat/FG)</h2>
+                <span class="date">5 Des - 11 Des 2025</span>
+                <p>Implementasi logika percakapan untuk administrasi sekolah sesuai flowchart.</p>
+                <ul>
+                    <li>Flow <strong>PPDB</strong> (Pendaftaran & Link Form).</li>
+                    <li>Flow <strong>Cek Tagihan</strong> (Lookup Database Siswa).</li>
+                    <li>Logika Integrasi Link Pembayaran (Flip/FGapps).</li>
+                    <li>Sistem QnA Otomatis untuk pertanyaan umum wali murid.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <h2>Fase 3: Modul Travel & Umroh</h2>
+                <span class="date">12 Des - 18 Des 2025</span>
+                <p>Implementasi logika percakapan kompleks untuk calon jamaah.</p>
+                <ul>
+                    <li>Decision Logic: <strong>Umroh vs Haji</strong>.</li>
+                    <li>Flow Paket: <strong>Group vs Private</strong>.</li>
+                    <li>Sistem Appointment (Penjadwalan Temu).</li>
+                    <li>Penyajian Data Dinamis (Destinasi, Akomodasi, Harga).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <h2>Fase 4: Automasi & Penjadwalan</h2>
+                <span class="date">19 Des - 25 Des 2025</span>
+                <p>Mengaktifkan fitur otomatisasi berbasis waktu (Cron & Wait Nodes).</p>
+                <ul>
+                    <li>Scheduler: <strong>Cek Tagihan (Tgl 10 tiap bulan)</strong>.</li>
+                    <li>Logic "Belum Bayar": Kirim Reminder otomatis.</li>
+                    <li>Logic "Tunggu 2 Hari": Follow-up otomatis pasca chat.</li>
+                    <li>Pencatatan status pembayaran ke Google Sheets secara real-time.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <h2>Fase 5: Testing & Deployment</h2>
+                <span class="date">26 Des 2025 - 1 Jan 2026</span>
+                <p>Uji coba menyeluruh dan serah terima sistem.</p>
+                <ul>
+                    <li>Internal Testing (Flow Logic & Error Handling).</li>
+                    <li>UAT (User Acceptance Test) oleh Admin & Pak Mursid.</li>
+                    <li>Optimasi prompt AI untuk respon yang natural.</li>
+                    <li>Pelatihan Admin untuk memonitor n8n.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Script untuk animasi scroll
+        const items = document.querySelectorAll('.container');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        items.forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+
+</body>
+</html>
